@@ -1,0 +1,568 @@
+
+import datetime
+import tkinter as tk
+import tkinter.filedialog
+import csv as csv1
+import sys
+import pandas as pd
+import time
+
+# time settings
+start = time.time()
+dt = str(datetime.datetime.today().strftime("%B %d %Y "))
+
+# file names
+storage = "" + dt + " storage csv raw data "
+output = 'PFM Output' + str(dt) + ''
+
+root = tk.Tk()
+root.withdraw()
+
+file_path = tk.filedialog.askopenfilename(initialdir='C:/Users/dmare/Dropbox/Datafy', title="Select file", filetypes=[("ALL Files", "*.*")])
+print(file_path)
+FormattedExcel = file_path[10:]
+print(FormattedExcel, ' :Formatted Excel file path')
+reader = csv1.reader(sys.stdin)
+with open(file_path, encoding='utf8', errors='surrogateescape') as input, open( storage + '.csv', 'w',encoding='utf8') as output:
+    non_blank = (line for line in input if line.strip())
+    output.writelines(non_blank)
+df = pd.read_csv(storage + ".csv", delimiter=";")
+
+headers = list(df)
+
+#
+#
+#                            PARSER VERSION 1:
+#
+#                   Takes Input starting from SQNo and parses ( split by ; ) document
+#
+#                   OUTPUT: Relevant fields to SuperMax Parsing MASTERFILE
+#
+#
+
+#                   FUTURE REVISION:
+#
+#                   - ENSURE SURVEY GUID IS REMOVED ON OPENING
+#                   - CHANGE ALL nan OUTPUT TO '-'
+#                   - CHANGE GPS from '.' to ','
+#                   - LIMIT decimals to 6
+#                   - OUTPUT DATA QUALITY FILE and REPORT (summary of user-errors)
+#                   - CORRECTLY NAME FILES AUTOMATICALLY
+#                   - ASSIGN YES/NO FIELDS BASED ON LOGIC
+#                   - FORCE Lower/Uppercase conventions
+#                   - COUNT TOTAL INPUT LINES
+#                   - COUNT TOTAL LINES REMOVED
+#                   - COUNT TOTAL LINES OUTPUTTED
+loops = 0
+empty = 0
+notEmpty =0
+store = ''
+previousStore = ''
+print(headers)
+Question = ''
+Answer = ''
+Street = ''
+A1 = ''
+A2 = ''
+A3 = ''
+A4 = ''
+A5 = ''
+A6 = ''
+A7 = ''
+A8 = ''
+A9 = ''
+A10 = ''
+A11 = ''
+A12 = ''
+A13 = ''
+A14 = ''
+A15 = ''
+A16 = ''
+A17 = ''
+A18 = ''
+A19 = ''
+A20 = ''
+A21 = ''
+A22 = ''
+A23 = ''
+A24 = ''
+A25 = ''
+A26 = ''
+A27 = ''
+A28 = ''
+A29 = ''
+A30 = ''
+A31 = ''
+A32 = ''
+A33 = ''
+A34 = ''
+A35 = ''
+A36 = ''
+A37 = ''
+A38 = ''
+A40 = ''
+A41 = ''
+A42 = ''
+A43 = ''
+A44 = ''
+A45 = ''
+A46 = ''
+A47 = ''
+
+
+pA1 = ''
+pA2 = ''
+pA3 = ''
+pA4 = ''
+pA5 = ''
+pA6 = ''
+pA7 = ''
+pA8 = ''
+pA9 = ''
+DataType = ''
+Date = ''
+Value_1 = ''
+Value_2 =''
+Value_3 = ''
+Value_4 = ''
+GPS_Longitude = ''
+GPS_Latitude = ''
+Value_5 = ''
+Caption_1 = ''
+pStreet = ''
+for i, row in df.iterrows():
+
+    c = 0
+
+    for j, column in row.iteritems():
+
+        if c == 0:
+            print('start c: ', c)
+         #   pSQNo = SQNo
+            SQNo = column
+
+            print('c: ', c, 'SQNo: ', SQNo)
+        if c == 1:
+            pDataType = DataType
+            DataType = column
+
+            print('c: ', c, 'datatype: ', DataType)
+        if c == 2:
+            pDate = Date
+            Date = column
+
+            print('c: ', c, 'date: ', Date)
+        if c == 3:
+           # pDescription = Description
+            Description = column
+
+            print('c: ', c, 'description: ', Description)
+        if c == 4:
+            pCaption_1 = Caption_1
+            Caption_1 = column
+
+        if c == 5:
+            pValue_1 = Value_1
+            Value_1 = column
+
+        if c == 6:
+            Caption_2 = column
+
+        if c == 7:
+            pValue_2 = Value_2
+            Value_2 = column
+
+        if c == 8:
+            Caption_3 = column
+
+        if c == 9:
+            pValue_3 = Value_3
+            Value_3 = column
+
+        if c == 10:
+            Caption_4 = column
+
+        if c == 11:
+            pValue_4 = Value_4
+            Value_4 = column
+
+        if c == 12:
+            Caption_5 = column
+
+        if c == 13:
+            print('c: ', c)
+            pValue_5 = Value_5
+            Value_5 = column
+            if pd.isnull(Value_5) == True:
+                Value_5 = 'Empty'
+            if previousStore == '':
+                print('Previous Store is empty')
+                store = Value_5
+                previousStore = Value_5
+            else:
+                previousStore = store
+                store = Value_5
+        if c == 14:
+            Question = column
+            print('Question: ', Question)
+
+        if c == 15:
+            Answer = column
+            print('Answer: ', Answer)
+
+        if c == 16:
+            Report_Criteria_1 = column
+
+        if c == 17:
+            Report_Criteria_2 = column
+
+        if c == 18:
+            Report_Criteria_3 = column
+
+        if c == 19:
+            Report_Criteria_4 = column
+
+        if c == 20:
+            Report_Criteria_5 = column
+
+        if c == 21:
+            Report_Criteria_6 = column
+
+        if c == 22:
+            Report_Criteria_7 = column
+
+        if c == 23:
+            pGPS_Longitude = GPS_Longitude
+            GPS_Longitude = column
+
+        if c == 24:
+            pGPS_Latitude = GPS_Latitude
+            GPS_Latitude = column
+
+        if c == 25:
+            Clerk = column
+
+        if c == 26:
+            CheckBox_Option_1 = column
+
+        if c == 27:
+            CheckBox_Value_1 = column
+
+        if c == 28:
+            CheckBox_Option_2 = column
+
+        if c == 29:
+            CheckBox_Value_2 = column
+
+        if c == 30:
+            CheckBox_Option_3 = column
+
+        if c == 31:
+            CheckBox_Value_3 = column
+
+        if c == 32:
+            CheckBox_Option_4 = column
+
+        if c == 33:
+            CheckBox_Value_4 = column
+
+        if c == 34:
+            CheckBox_Option_5 = column
+
+        if c == 35:
+            CheckBox_Value_5 = column
+
+        if c == 36:
+            CheckBox_Option_6 = column
+
+        if c == 37:
+            CheckBox_Value_6 = column
+
+
+        if Question == 'Please count all the SMX products facings you see on shelf.':
+             pA1 = A1
+             A1 = Answer
+        if Question == 'Please count ALL the Competitor product facings you see on shelf.':
+             pA2 = A2
+             A2 = Answer
+
+        if Question == 'Where is the SMX products located in the store? ':
+
+             print('c: ', c)
+             print('i: ', i)
+             print('CheckBox Value 1 :', CheckBox_Value_1)
+             print('CheckBox Value 2 :', CheckBox_Value_2)
+             print('CheckBox Value 3 :', CheckBox_Value_3)
+             print('CheckBox Value 4 :', CheckBox_Value_4)
+             print('CheckBox Value 5 :', CheckBox_Value_5)
+             print('CheckBox Value 6 :', CheckBox_Value_6)
+             if CheckBox_Value_1 == 1:
+                pA4 = A4
+                A4 = "ISLE"
+             if CheckBox_Value_2 == 1:
+                pA4 = A4
+                A4 = "KIOSK"
+             if CheckBox_Value_3 == 1:
+                pA4 = A4
+                A4 = "FSU"
+             if CheckBox_Value_4 == 1:
+                pA4 = A4
+                A4 = "POWERWING"
+             if CheckBox_Value_5 == 1:
+                pA4 = A4
+                A4 = "STRIPS"
+             if CheckBox_Value_6 == 1:
+                pA4 = A4
+                A4 = "NONE"
+             print('A4 is : ', pA4)
+        if Question == 'Please select from the list below all the MALE SMX products you see in store.' and CheckBox_Option_1 == 'SMX SMX4 M DISP 1857':
+            pA5 = A5
+            A5 = CheckBox_Value_1
+            pA6 = A6
+            A6 = CheckBox_Value_2
+            pA7 = A7
+            A7 = CheckBox_Value_3
+            pA8 = A8
+            A8 = CheckBox_Value_4
+            pA9 = A9
+            A9 = CheckBox_Value_5
+            pA10 = A10
+            A10 = CheckBox_Value_6
+
+        if Question == 'Please select from the list below all the MALE SMX products you see in store.' and CheckBox_Option_1 == 'SMX KWIK 3 DISP 1598':
+            pA11 = A11
+            A11= CheckBox_Value_1
+            pA12= A12
+            A12 = CheckBox_Value_2
+            pA13 = A13
+            A13 = CheckBox_Value_3
+            pA14 = A14
+            A14 = CheckBox_Value_4
+            pA15 = A15
+            A15 = CheckBox_Value_5
+            pA16 = A16
+            A16 = CheckBox_Value_6
+        if Question == 'Please select from the list below all the MALE SMX products you see in store.' and CheckBox_Option_1 == 'SMX D/EDGE DISP KWIK II 6327':
+            pA17 = A17
+            A17 = CheckBox_Value_1
+            pA18 = A18
+            A18 = CheckBox_Value_2
+            pA19 = A19
+            A19 = CheckBox_Value_3
+            pA20 = A20
+            A20 = CheckBox_Value_4
+            pA21= A21
+            A21 = CheckBox_Value_5
+            pA22 = A22
+            A22 = CheckBox_Value_6
+        if Question == 'Please select from the list below all the COMPETITOR products you see in store.' and CheckBox_Option_1 == 'BIC EASY DISP RZR 4069':
+            pA23 = A23
+            A23 = CheckBox_Value_1
+            pA24 = A24
+            A24= CheckBox_Value_2
+            pA25 = A25
+            A25 = CheckBox_Value_3
+            pA26 = A26
+            A26 = CheckBox_Value_4
+            pA27 = A27
+            A27 = CheckBox_Value_5
+            pA28 = A28
+            A28 = CheckBox_Value_6
+        if Question == 'Please select from the list below all the COMPETITOR products you see in store.' and CheckBox_Option_1 == 'DUEL TRP BLADE DISP 1411':
+            pA29 = A29
+            A29 = CheckBox_Value_1
+            pA30 = A30
+            A30 = CheckBox_Value_2
+            pA31 = A31
+            A31 = CheckBox_Value_3
+            pA32 = A32
+            A32 = CheckBox_Value_4
+            pA33 = A33
+            A33 = CheckBox_Value_5
+            pA34 = A34
+            A34 = CheckBox_Value_6
+        if Question == 'Please select from the list below all the COMPETITOR products you see in store.' and CheckBox_Option_1 == 'BIC 1 NORMAL POUCH 5027':
+            pA35 = A35
+            A35 = CheckBox_Value_1
+            pA36 = A36
+            A36 = CheckBox_Value_2
+            pA37 = A37
+            A37 = CheckBox_Value_3
+            pA38 = A38
+            A38 = CheckBox_Value_4
+            pA39 = A39
+            A39 = CheckBox_Value_5
+            pA40 = A40
+            A40 = CheckBox_Value_6
+        if Question == 'Please select from the list below all the COMPETITOR products you see in store.' and CheckBox_Option_1 == 'BIC 24 DISP TWIN CARD':
+            pA41 = A41
+            A41 = CheckBox_Value_1
+            pA42 = A42
+            A42 = CheckBox_Value_2
+            pA43 = A43
+            A43 = CheckBox_Value_3
+            pA44 = A44
+            A44 = CheckBox_Value_4
+            pA45 = A45
+            A45 = CheckBox_Value_5
+            p46 = A46
+            A46 = CheckBox_Value_6
+        if Question == 'Please select from the list below all the COMPETITOR products you see in store.' and CheckBox_Option_1 == 'MINOR PLAT D/E BLD 20 x 5 CRD 2494':
+            pA47 = A47
+            A47 = CheckBox_Value_1
+            pA48 = A48
+            A48 = CheckBox_Value_2
+            pA49 = A49
+            A49 = CheckBox_Value_3
+            pA50 = A50
+            A50 = CheckBox_Value_4
+            pA51 = A51
+            A51 = CheckBox_Value_5
+            pA52 = A52
+            A52 = CheckBox_Value_6
+        if Question == 'Please select from the list below all the COMPETITOR products you see in store.' and CheckBox_Option_1 == 'BIC TWIN LADY SHAVER 8969':
+            pA53 = A53
+            A53 = CheckBox_Value_1
+            pA54 = A54
+            A54 = CheckBox_Value_2
+            pA55 = A55
+            A55 = CheckBox_Value_3
+            pA56 = A56
+            A56 = CheckBox_Value_4
+            pA57 = A57
+            A57 = CheckBox_Value_5
+            pA58 = A58
+            A58 = CheckBox_Value_6
+        if Question == 'Please select from the list below all the FEMALE SMX products you see in store.':
+            pA59 = A59
+            A59 = CheckBox_Value_1
+            pA60 = A60
+            A60 = CheckBox_Value_2
+            pA61 = A61
+            A61 = CheckBox_Value_3
+            pA62 = A62
+            A62 = CheckBox_Value_4
+            pA63 = A63
+            A63 = CheckBox_Value_5
+            pA64 = A64
+            A64= CheckBox_Value_6
+        if Question == 'Please select from the list below all SMX products you see in store.' and CheckBox_Option_1 == 'SMX SHAV MENTHOL CRM 0866':
+            pA65 = A65
+            A65 = CheckBox_Value_1
+            pA66 = A66
+            A66 = CheckBox_Value_2
+            pA67 = A67
+            A67 = CheckBox_Value_3
+            pA68 = A68
+            A68 = CheckBox_Value_4
+            pA69 = A69
+            A69 = CheckBox_Value_5
+            pA70 = A70
+            A70 = CheckBox_Value_6
+        if Question == 'Please select from the list below all SMX products you see in store.' and CheckBox_Option_1 == 'SMX ULTFOAM CLS 300ML 3089':
+            pA71 = A71
+            A71 = CheckBox_Value_1
+            pA72 = A72
+            A72 = CheckBox_Value_2
+            pA73 = A73
+            A73 = CheckBox_Value_3
+            pA74 = A74
+            A74= CheckBox_Value_4
+            pA75 = A75
+            A75 = CheckBox_Value_5
+            pA76 = A76
+            A76 = CheckBox_Value_6
+        if Question == 'Please select from the list below all SMX products you see in store.' and CheckBox_Option_1 == 'VAYA SMTH 7.5ML 0860':
+            pA77 = A77
+            A77 = CheckBox_Value_1
+            pA78 = A78
+            A78 = CheckBox_Value_2
+            pA79 = A79
+            A79 = CheckBox_Value_3
+            pA80 = A80
+            A80 = CheckBox_Value_4
+            pA81 = A81
+            A81 = CheckBox_Value_5
+            pA82 = A82
+            A82 = CheckBox_Value_6
+                                                    # ____________________________     PREPS     _________________________
+        if Question == 'Please select from the list below all the COMPETITOR products you see in store.' and CheckBox_Option_1 == 'NIV MEN SENS GEL 200ML 3267':
+            pA83 = A83
+            A83 = CheckBox_Value_1
+            pA84= A84
+            A84 = CheckBox_Value_2
+            pA85 = A85
+            A85 = CheckBox_Value_3
+            pA86 = A86
+            A86 = CheckBox_Value_4
+            pA87 = A87
+            A87 = CheckBox_Value_5
+            pA88 = A88
+            A88 = CheckBox_Value_6
+
+        if Question == 'Please select from the list below all the COMPETITOR products you see in store.' and CheckBox_Option_1 == 'NIV MEN SENS FOAM 200ML 7207':
+            pA89 = A89
+            A89 = CheckBox_Value_1
+            pA90 = A90
+            A90 = CheckBox_Value_2
+            pA91 = A91
+            A91 = CheckBox_Value_3
+            pA92 = A92
+            A92 = CheckBox_Value_4
+            pA93 = A93
+            A93 = CheckBox_Value_5
+            pA94 = A94
+            A94 = CheckBox_Value_6
+        if Question == 'Please select from the list below all the COMPETITOR products you see in store.' and CheckBox_Option_1 == 'GILL SH FOAM SEN 200ML 2075':
+            pA95 = A95
+            A95 = CheckBox_Value_1
+            pA96 = A96
+            A96 = CheckBox_Value_2
+            pA97 = A97
+            A97 = CheckBox_Value_3
+            pA98 = A98
+            A98 = CheckBox_Value_4
+            pA99 = A99
+            A99 = CheckBox_Value_5
+            pA100 = A100
+            A100 = CheckBox_Value_6
+        if Question == 'Is Merchandising flow according to SMX Merchandising standards?':
+             pA101 = A101
+             A101 = Answer
+        if Question == 'Does all the SMX products have PI Labels?':
+             pA102 = A102
+             A102 = Answer
+        if Question == 'What line is on Promo, if any is ticketing up?':
+             pA103 = A103
+             A103 = Answer
+
+        c = c + 1
+    print('store: ', store, ' previous store: ', previousStore)
+    print(loops, 'loops')
+    loops = loops +1
+    if store == 'Empty':
+        empty = empty + 1
+        print(empty, ' stores are empty based on store == empty')
+        print('store is Empty')
+        continue
+    elif store == previousStore:
+        print('store = previous store : collection continues')
+    else:
+          notEmpty = notEmpty + 1
+          print(notEmpty, ' stores are not empty ')
+
+          if previousStore != 'Empty':
+            print('Outputing:   since Store Name =/= Previous Store')
+            with open('SuperMax' +dt+ '.csv', 'a', newline='', encoding='utf8') as f:
+                thewriter = csv1.writer(f, delimiter='|')
+                thewriter.writerow([ pDate, pValue_1, pValue_2, pValue_3, pValue_4, pGPS_Latitude, pGPS_Longitude, pA1, pA2, pA3, pA4, pA5, pA6, pA7, pA8, pA9, A10, A11, A12, A13, A14, pA15, A16, A17, A18, A19, A20, A21, A22, A23, A24, A25, A26, A27, A28, pValue_5])
+            print('output complete')
+
+
+with open('SuperMax' +dt+ '.csv', 'a', newline='', encoding='utf8') as f:
+        thewriter = csv1.writer(f, delimiter='|')
+        thewriter.writerow([ Date, Value_1, Value_2, Value_3, Value_4, GPS_Latitude, GPS_Longitude, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22, A23, A24, A25, A26, A27, A28, Value_5])
+print('output complete')
+print(loops, 'loops')
+print(empty, ' stores are empty based on store == empty')
+print(notEmpty, ' stores are not empty ')
